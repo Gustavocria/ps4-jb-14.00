@@ -13,7 +13,7 @@ function loadHxTables() {
   const sourcePath = resolve(root, "raw13/hx_tables.js");
   const source = readFileSync(sourcePath, "utf8");
   const transformed = source.replace(
-    /^export\\s+const\\s+HX1400_TABLES\\s*=/m,
+    /^export\s+const\s+HX1400_TABLES\s*=/m,
     "const HX1400_TABLES =",
   );
 
@@ -25,7 +25,7 @@ function loadHxTables() {
 
   const sandbox = { module: { exports: {} } };
   vm.runInNewContext(
-    transformed + "\\n;globalThis.__HX1400_TABLES = HX1400_TABLES;",
+    transformed + "\n;globalThis.__HX1400_TABLES = HX1400_TABLES;",
     sandbox,
     { filename: sourcePath, timeout: 1000 },
   );
@@ -51,8 +51,11 @@ for (const [name, expected] of [
 ]) {
   assert.ok(Array.isArray(tables[name]), name + " must be an array");
   assert.equal(tables[name].length, expected, name + " length");
-  assert.deepEqual(Array.from(tables[name]), snapshot[name],
-    name + " must match the checked-in JSON snapshot");
+  assert.deepEqual(
+    Array.from(tables[name]),
+    snapshot[name],
+    name + " must match the checked-in JSON snapshot",
+  );
 }
 
 assert.equal(tables.PKB.length, 1264, "PKB hex length");
@@ -80,16 +83,16 @@ assert.equal(tables.P[3], 0x00004aab, "HEN entry marker");
 assert.equal(tables.P[12], 0x00798754, "kernel anchor marker");
 
 const hxSource = readFileSync(resolve(root, "raw13/hx1400_port.js"), "utf8");
-assert.match(hxSource, /export\\s+async\\s+function\\s+runHx1400\\s*\\(/);
+assert.match(hxSource, /export\s+async\s+function\s+runHx1400\s*\(/);
 assert.match(
   hxSource,
-  /kbase discovery complete; stopping before socket spray\\/kernel writes/,
+  /kbase discovery complete; stopping before socket spray\/kernel writes/,
   "research module must retain its explicit discovery-only stop marker",
 );
 
 const rootJb = readFileSync(resolve(root, "jb.js"), "utf8");
 const importMatch = rootJb.match(
-  /import\\(["'](\\.\\/hx1400_port\\.js(?:\\?[^"']*)?)["']\\)/,
+  /import\(["'](\.\/hx1400_port\.js(?:\?[^"']*)?)["']\)/,
 );
 
 if (importMatch) {
