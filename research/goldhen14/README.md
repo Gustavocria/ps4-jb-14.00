@@ -1,6 +1,6 @@
 # GoldHEN 14.00 — read-only repository audit
 
-This directory contains a reproducible, non-destructive audit for the existing
+This directory contains reproducible, non-destructive checks for the existing
 14.00 research artifacts.
 
 ## What it verifies
@@ -13,6 +13,11 @@ This directory contains a reproducible, non-destructive audit for the existing
   research summary.
 - The HX1400 research module retains its explicit stop before socket spraying
   and kernel writes.
+
+A separate static inspection of the user's supplementary uploads is documented
+in [SUPPLEMENTARY_UPLOADS.md](SUPPLEMENTARY_UPLOADS.md). The installer and
+kpayload profile tables resolve through their 14.00 selectors and match the
+public 89-field profile; the alternate HEN-family binary is kept separate.
 
 ## Important status
 
